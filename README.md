@@ -1,5 +1,7 @@
 # 🚗 TripFare : Predicting Urban Taxi Fare with Machine Learning
 
+**Streamlit app** : https://tripfarepredictionproject-c9vhppujsac8cayt3m6oan.streamlit.app/
+
 ## Description
 As a Data Analyst at an urban mobility analytics firm, this project aims to unlock insights from real-world taxi trip data to enhance fare estimation systems and promote pricing transparency for passengers. Using historical taxi trip records from a metropolitan transportation network, the goal is to build a predictive model that accurately estimates the total taxi fare amount based on various ride-related features.
 
