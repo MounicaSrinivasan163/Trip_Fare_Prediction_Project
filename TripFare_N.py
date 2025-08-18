@@ -292,7 +292,7 @@ with tabs[1]:
 
 
 # Load the dataset for admin view
-df = pd.read_csv("taxi_fare_with_areas.csv")
+df = pd.read_parquet("data/taxi_fare_with_areas.parquet")
 
 with tabs[2]:
     st.header("Admin View")
@@ -382,4 +382,5 @@ with tabs[2]:
         payment_counts.columns = ['payment_type', 'count']
         fig4 = px.pie(payment_counts, names='payment_type', values='count', title='Payment Type Distribution')
         st.plotly_chart(fig4, use_container_width=True)
+
 
