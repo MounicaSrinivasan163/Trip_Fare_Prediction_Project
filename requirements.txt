@@ -10,3 +10,4 @@ plotly
 geopandas
 geopy
 folium
+streamlit-folium
