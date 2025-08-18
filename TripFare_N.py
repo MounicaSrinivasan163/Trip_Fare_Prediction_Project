@@ -34,7 +34,7 @@ def set_bg_from_local(image_path):
     """
     st.markdown(css, unsafe_allow_html=True)
 
-image_path = r"D:\\DataScience\\Guvi_projects\\TripFare _ML\\photo.jpg"
+image_path = r"photo.jpg"
 set_bg_from_local(image_path)
 
 
@@ -382,3 +382,4 @@ with tabs[2]:
         payment_counts.columns = ['payment_type', 'count']
         fig4 = px.pie(payment_counts, names='payment_type', values='count', title='Payment Type Distribution')
         st.plotly_chart(fig4, use_container_width=True)
+
