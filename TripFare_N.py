@@ -51,9 +51,10 @@ def load_model_and_preprocessing():
 
 model, preprocessing = load_model_and_preprocessing()
 X_scaler = preprocessing['X_scaler']
-y_scaler = preprocessing['y_scaler']
-boxcox_lambdas = preprocessing['boxcox_lambdas']
-boxcox_shifts = preprocessing['boxcox_shifts']
+y_scalers = preprocessing['y_scalers']      # dict of scalers
+boxcox_lambdas = preprocessing['boxcox_lambdas']  # dict {col: λ}
+boxcox_shifts = preprocessing['boxcox_shifts']    # dict {col: shift}
+target_cols = preprocessing['y_columns']
 
 # -------------------------
 # Inverse Box-Cox helper
@@ -67,24 +68,30 @@ def inv_boxcox(y, lam):
 # -------------------------
 # Prediction function
 # -------------------------
-
 def predict(input_df):
-    global model, X_scaler, y_scaler
+    global model, X_scaler, y_scalers, boxcox_lambdas, boxcox_shifts
     
     # Step 1: scale input features
     X_scaled = X_scaler.transform(input_df)
     
     # Step 2: model prediction (scaled target space)
-    y_pred_scaled = model.predict(X_scaled)
+    y_pred_scaled = model.predict(X_scaled)  # shape: (n_samples, n_targets)
     
-    # Step 3: inverse StandardScaler (back to raw values)
-    y_pred_raw = y_scaler.inverse_transform(y_pred_scaled)
+    # Step 3: inverse StandardScaler per column
+    y_pred_df = pd.DataFrame(y_pred_scaled, columns=target_cols)
+    for col in y_pred_df.columns:
+        y_pred_df[col] = y_scalers[col].inverse_transform(y_pred_df[[col]])
     
-    # Step 4: format output
-    target_cols = ['fare_amount', 'total_amount', 'duration', 'tip_amount']
+    # Step 4: inverse Box-Cox per column (after shift)
+    for col in y_pred_df.columns:
+        lam = boxcox_lambdas[col]
+        shift = boxcox_shifts[col]
+        y_pred_df[col] = inv_boxcox(y_pred_df[col], lam) - shift
+    
+    # Step 5: format output (only for first row)
     y_pred_final = {}
-    for i, col in enumerate(target_cols):
-        val = y_pred_raw[0, i]
+    for col in target_cols:
+        val = float(y_pred_df.iloc[0][col])
         val = max(val, 0.0)  # no negatives
         
         # round appropriately
@@ -93,11 +100,12 @@ def predict(input_df):
         else:
             y_pred_final[col] = round(val, 2)  # money
     
-    # Step 5: compute other_charges
+    # Step 6: compute other_charges
     other_charges = y_pred_final['total_amount'] - y_pred_final['fare_amount']
     y_pred_final['other_charges'] = round(max(other_charges, 0.0), 2)
     
     return y_pred_final
+
 
 
 
@@ -382,6 +390,7 @@ with tabs[2]:
         payment_counts.columns = ['payment_type', 'count']
         fig4 = px.pie(payment_counts, names='payment_type', values='count', title='Payment Type Distribution')
         st.plotly_chart(fig4, use_container_width=True)
+
 
 
 
