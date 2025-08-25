@@ -113,7 +113,7 @@ Supervised Machine Learning — Regression
 | **Linear Regression** | Baseline, interpretable, but limited in capturing non-linear patterns. R² around **0.48–0.66**.                           |
 | **Random Forest**     | Strong improvement over baseline, handles non-linearities well. R² up to **0.73**.                                        |
 | **SVR**               | Computationally heavy and underperformed compared to tree-based models (lowest R² on most targets).                       |
-| **LightGBM**          | Highest accuracy overall — R² up to **0.745**, lowest errors on most targets, very fast training.                         |
+| **LightGBM**          | Highest accuracy overall — R² up to **0.78**, lowest errors on most targets, very fast training.                         |
 | **XGBoost**           | Performance almost identical to LightGBM (slightly higher R² on some targets, slightly lower on others), slightly slower. |
 
 
