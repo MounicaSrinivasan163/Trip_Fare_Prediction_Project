@@ -119,6 +119,10 @@ Supervised Machine Learning — Regression
 
 10. **Deployment**  
     - Build a Streamlit UI for users to input trip details and get fare predictions.
+      
+  <img width="1349" height="552" alt="image" src="https://github.com/user-attachments/assets/a7625c00-fc81-4378-88b3-9623c2344da4" />
+
+  <img width="1341" height="541" alt="image" src="https://github.com/user-attachments/assets/e28aa4c5-8a40-4f20-8ae4-5afbc6ce1a45" />
 
 ---
 
