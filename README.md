@@ -106,6 +106,8 @@ Supervised Machine Learning — Regression
 9. **Finalize Best Model**  
    - Select the best model based on evaluation metrics and save it (pickle format).
    - Selected The model using **LightGBM** as the best model and pickled it
+  
+   
 | Model                 | Overall Trend                                                                                                             |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------- |
 | **Linear Regression** | Baseline, interpretable, but limited in capturing non-linear patterns. R² around **0.48–0.66**.                           |
